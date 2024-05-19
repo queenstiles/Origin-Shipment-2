@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    form {
+      border: 3px solid #f1f1f1;
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=email] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #04AA6D;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    .cancelbtn {
+      width: auto;
+      padding: 10px 18px;
+      background-color: #f44336;
+    }
+
+    .imgcontainer {
+      text-align: center;
+      margin: 24px 0 12px 0;
+
+    }
+
+    img.avatar {
+      width: 20%;
+      border-radius: 50%;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    span.psw {
+      float: right;
+      padding-top: 16px;
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+      span.psw {
+        display: block;
+        float: none;
+      }
+
+      .cancelbtn {
+        width: 100%;
+      }
+    }
+
+    .bbd {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .button2 {
+      background-color: #04AA6D;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .button2:hover {
+      opacity: 0.8;
+    }
+  </style>
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+  <script type="module">
+
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC8DPOS5L_uRfvmF-ggSGgfNxFxYxjmAYs",
+      authDomain: "exprexlogix.firebaseapp.com",
+      projectId: "exprexlogix",
+      storageBucket: "exprexlogix.appspot.com",
+      messagingSenderId: "432902759167",
+      appId: "1:432902759167:web:8dc19e37aee94c67c4a2ca"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+
+
+
+    const formDAT = document.getElementById('fmm');
+
+    formDAT.addEventListener('submit', event => {
+      event.preventDefault();
+
+      const formData = new FormData(formDAT);
+      let email = formData.get('email');
+      let adminpass = formData.get('adminpass');
+      let username = (formData.get('username'));
+      let password = formData.get('password');
+      let password2 = formData.get('password2');
+
+
+      if (formData) {
+        if (password === password2) {
+          notyf.success("Loading...");
+
+          getDoc(doc(db, "admin", "joinpass")).then(docSnap => {
+           
+              setDoc(doc(db, "users", email), {
+                username: username,
+                balance: 0,
+                email: email,
+                password: password,
+                contactemail: "",
+                contactphone: "",
+                street: "",
+                createdAt: new Date().toDateString(),
+                Cdate: serverTimestamp(),
+
+              }).then(() => {
+                createUserWithEmailAndPassword(auth, email, password)
+                  .then((userCredential) => {
+                    if (userCredential.user) {
+                      window.location.replace("./dash.html");
+                    } else {
+                      notyf.error("something went worng when adding your information");
+                    }
+                  })
+                  .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    notyf.error("something went worng with authentication");
+                    // ..
+                  });
+              });
+          })
+
+        } else {
+          notyf.error("password do not match");
+        }
+
+
+      } else {
+        notyf.error("something went worng, please preview information before submitting");
+      }
+    });
+
+
+
+  </script>
+
+
+
+</head>
+
+<body>
+
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+  <script>
+    var notyf = new Notyf({
+      duration: 2000,
+      position: {
+        x: 'right',
+        y: 'top',
+      },
+    });
+
+  </script>
+
+  <div class="bbd">
+
+    <style>
+      .fms {
+        width: 50%;
+        margin-top: 5%;
+      }
+
+      @media screen and (max-width:992px) {
+        .fms {
+          width: 95%;
+        }
+      }
+    </style>
+
+    <form id="fmm" class="fms">
+      <div class="imgcontainer">
+        <img src="./admin.jpeg" alt="Avatar" class="avatar">
+      </div>
+
+      <div class="container">
+
+
+        <label for="fname">Username</label>
+        <input type="text" id="username" required name="username" placeholder="Enter username">
+
+
+
+        <label for="uname"><b>Email</b></label>
+        <input type="email" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="password" required>
+
+        <label for="psw"><b>Re-enter Password</b></label>
+        <input type="password" placeholder="Re-try Password" name="password2" id="password2" required>
+
+        <input class="button2" type="submit" value="Register" />
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+        <br>
+        <h5>i already have an account <a href="./login.html">Login</a></h5>
+      </div>
+
+
+    </form>
+
+  </div>
+
+
+
+
+
+  <script src="//code.tidio.co/1qetexy56eew80x5keufpgetzuz67l8g.js" async></script>
+</body>
+
+</html>

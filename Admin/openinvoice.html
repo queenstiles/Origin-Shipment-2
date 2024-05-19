@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>Admin</title>
+      <script type="module">const url = window.location.search;
+            const urldata = new URLSearchParams(url);
+            const i = urldata.get("i");
+            const c = urldata.get("c");
+
+
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+            import { getFirestore, doc, setDoc, getDoc, query, onSnapshot, collection, orderBy, updateDoc, addDoc, serverTimestamp, deleteDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+            import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                  apiKey: "AIzaSyC8DPOS5L_uRfvmF-ggSGgfNxFxYxjmAYs",
+                  authDomain: "exprexlogix.firebaseapp.com",
+                  projectId: "exprexlogix",
+                  storageBucket: "exprexlogix.appspot.com",
+                  messagingSenderId: "432902759167",
+                  appId: "1:432902759167:web:8dc19e37aee94c67c4a2ca"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const auth = getAuth(app);
+
+
+            onAuthStateChanged(auth, async (user) => {
+                  if (user) {
+
+
+                        onSnapshot(doc(db, "users", user.email), (doc) => {
+                              document.getElementById('contactemail').innerHTML = doc.data().contactemail;
+                              document.getElementById('contactemail2').innerHTML = doc.data().contactemail;
+                              document.getElementById('contactphone').innerHTML = doc.data().contactphone;
+                              document.getElementById('contactphone2').innerHTML = doc.data().contactphone;
+                              document.getElementById('street').innerHTML = doc.data().street;
+
+
+                        })
+
+                        const docRef = doc(db, "tracking", i);
+                        const docSnap = await getDoc(docRef);
+
+
+
+                        if (docSnap.data().totalweight > 0) {
+                              const USDollar = new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                              })
+
+                              const a2 = Number(docSnap.data().express);
+                              const a3 = Number(docSnap.data().second);
+                              const a4 = Number(docSnap.data().third);
+                              console.log(docSnap.data().date)
+                              document.getElementById('fullname').innerHTML = docSnap.data().invoiceto
+                              document.getElementById('email').innerHTML = docSnap.data().invoiceemail
+                              document.getElementById('phone').innerHTML = docSnap.data().invoicephone
+                              document.getElementById('totalweight').innerHTML = `${docSnap.data().totalweight}kg`
+                              document.getElementById('totalquantity').innerHTML = docSnap.data().totalquantity
+                              document.getElementById('express').innerHTML = `${c}${USDollar.format(a2).substring(1)}`
+                              document.getElementById('second').innerHTML = `${c}${USDollar.format(a3).substring(1)}`
+                              document.getElementById('third').innerHTML = `${c}${USDollar.format(a4).substring(1)}`
+                              document.getElementById('date').innerHTML = docSnap.data().date;
+                        } else {
+                              alert('no package added, add package to continue')
+                              window.location.replace("./additems.html");
+                        }
+
+
+
+                        const q = query(collection(db, "trackingitems", i, "trackingitems"), orderBy("Cdate", "desc"))
+                        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                              const USDollar = new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                              })
+                              querySnapshot.forEach((doc) => {
+
+
+                                    const FI = `
+                                <tr >
+                                    <td class="th">${doc.data().packagename} </td>
+                                    <td class="th">${doc.data().quantity} </td>
+                                    <td class="th">${doc.data().description} </td>
+                                    <td class="th">${doc.data().weight}kg</td>  
+                                
+                                
+                                </tr> `
+
+                                    document.getElementById("sdtb").insertAdjacentHTML('beforeend', FI);
+
+                              });
+                        })
+
+
+
+                  } else {
+                        window.location.replace("./login.html");
+
+                  }
+            });
+      </script>
+</head>
+
+<body>
+      <div>
+            <div id="google_translate_element"></div>
+            <script>function googleTranslateElementInit() { new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element") }</script>
+            <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            <button id="printer" style="border:0;color:#00f;padding:2%;background-color:transparent">Print page</button>
+      </div>
+      <div class="bbdd ">
+            <div class="tc-border">
+                  <div class="tc ">
+                        <div class="tcc2"><img class="immm" src="./logo6.png"></div>
+                        <div class="tcc2">
+                              <h2>INVOICE!!</h2>
+                        </div>
+                  </div>
+                  <div class="tc ">
+                        <div class="tcc2">
+                              <h3 style="color:rgb(38, 67, 38)">Invoice From</h3>
+                              <p>EXPREX LOGISTIC</p>
+                              <p id="contactemail"></p>
+                              <p id="contactphone"></p>
+                              <p id="street"></p>
+                        </div>
+                        <div class="tcc2" style="text-align:end">
+                              <h3 style="color:rgb(38, 67, 38)">Invoice To</h3>
+                              <p id="fullname"></p>
+                              <p id="email"></p>
+                              <p id="phone"></p>
+                        </div>
+                  </div>
+                  <div class="tc">
+                        <div class="tbbb">
+                              <table id="customers">
+                                    <tr>
+                                          <th>Package</th>
+                                          <th>Quantity</th>
+                                          <th>Description</th>
+                                          <th>Weight</th>
+                                    </tr>
+                                    <tbody id="sdtb">
+                                          <tr></tr>
+                                    </tbody>
+                              </table>
+                        </div>
+                  </div>
+                  <div class="tc" style="flex-direction:column;align-items:flex-start">
+                        <table class="ttbbb">
+                              <p1 class="ttbbb"
+                                    style="background-color:rgb(38, 67, 38);padding-top:1%;padding-bottom:1%;color:#fff">
+                                    <strong style="margin-left:1%">Total</strong>
+                              </p1>
+
+                              <tr>
+                                    <th>Total Quantity:</th>
+                                    <td id="totalquantity">loading...</td>
+                              </tr>
+
+                              <tr>
+                                    <th>Total Weight:</th>
+                                    <td id="totalweight">loading...</td>
+                              </tr>
+                              <tr></tr>
+                        </table>
+                        <table class="ttbbb">
+                              <p1 class="ttbbb"
+                                    style="background-color:rgb(38, 67, 38);padding-top:1%;padding-bottom:1%;color:#fff">
+                                    <strong style="margin-left:1%">Shipping Fee</strong>
+                              </p1>
+                              <tr>
+                                    <th>Express Delivery:</th>
+                                    <td id="express">loading...</td>
+                              </tr>
+                              <tr>
+                                    <th>Second Class Delivery:</th>
+                                    <td id="second">loading...</td>
+                              </tr>
+                              <tr>
+                                    <th>Third Class Delivery:</th>
+                                    <td id="third">loading...</td>
+                              </tr>
+                              <tr></tr>
+                        </table>
+                        <div class="tc" style="width:98%">
+                              <div class="tcc2">
+                                    <h3 style="color:rgb(38, 67, 38)">Date</h3>
+                                    <p>INVOICE DATE</p>
+                                    <p><strong>Invoice Date: </strong><span id="date">loading...</span></p>
+                              </div>
+                              <div class="tcc2" style="text-align:end">
+                                    <h3 style="color:rgb(38, 67, 38)">Contact Info</h3>
+                                    <p id="contactemail2"></p>
+                                    <p id="contactphone2"></p>
+                              </div>
+                        </div>
+                        <div class="tc">
+                              <div class="tcc2"></div>
+                        </div>
+                        <p style="opacity:.9;font-size:13px" class="copyright-text">© 2024 <a href="">Exprex
+                                    Logistic</a></p>
+                  </div>
+            </div>
+      </div>
+            <style>
+                  .ttbbb {
+                        width: 50%
+                  }
+
+                  @media screen and (max-width:992px) {
+                        .ttbbb {
+                              width: 100%
+                        }
+                  }
+
+                  table,
+                  td {
+                        border: 1px solid rgb(38, 67, 38);
+                        border-collapse: collapse
+                  }
+
+                  td {
+                        padding: 5px;
+                        text-align: left
+                  }
+
+                  th {
+                        padding: 5px;
+                        text-align: left;
+                        border-collapse: collapse;
+                        border: 1px solid rgb(38, 67, 38)
+                  }
+
+                  .downtabe {
+                        width: 100%;
+                        margin-top: 3%
+                  }
+
+                  #customers {
+                        font-family: Arial, Helvetica, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%
+                  }
+
+                  #customers td,
+                  #customers th {
+                        border: 1px solid #ddd;
+                        padding: 8px
+                  }
+
+                  #customers tr:nth-child(even) {
+                        background-color: #f2f2f2
+                  }
+
+                  #customers tr:hover {
+                        background-color: #ddd
+                  }
+
+                  #customers th {
+                        padding-top: 12px;
+                        padding-bottom: 12px;
+                        text-align: left;
+                        background-color: rgb(38, 67, 38);
+                        color: #fff
+                  }
+
+                  .tbbb {
+                        background-color: #fff;
+                        width: 100%;
+                        overflow-y: scroll
+                  }
+
+                  .tbbb::-webkit-scrollbar {
+                        display: none
+                  }
+
+                  .immm {
+                        width: 40%;
+                        opacity: 0.8;
+                        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+                        filter: grayscale(100%);
+                  }
+
+                  @media screen and (max-width:992px) {
+                        .immm {
+                              width: 40%
+                        }
+                  }
+
+                  .tc {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                      
+                        padding: 2%;
+
+                  }
+
+                  .tc-border {
+                        border: 1px dashed black;
+                        width: 55%;
+                        margin-top: 4%;
+                        margin-bottom: 10%;
+                  }
+
+                  @media screen and (max-width:992px) {
+                        .tc-border {
+                              width: 100%
+                        }
+                  }
+
+                  .bbdd {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column
+                  }
+            </style>
+            <script>const Printer = document.getElementById('printer');
+                  Printer.addEventListener('click', () => {
+                        print();
+
+                  })</script>
+            <script>document.addEventListener("contextmenu", function (e) { e.preventDefault() }), document.onkeydown = function (e) { return 123 != e.keyCode && ((!e.ctr1Key || !e.shiftKey || e.keyCode != "I".charCodeAt(0)) && ((!e.ctr1Key || !e.shiftKey || e.keyCode != "C".charCodeAt(0)) && ((!e.ctr1Key || !e.shiftKey || e.keyCode != "j".charCodeAt(0)) && ((!e.ctr1Key || !e.shiftKey || e.keyCode != "U".charCodeAt(0)) && void 0)))) }</script>
+</body>
+
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exprex Logistic | Contact</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Syne Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <!-- Inter Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Slick Slider -->
+    <link rel="stylesheet" href="css/slick-theme.css">
+    <link rel="stylesheet" href="css/slick.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="css/animate.min.css">
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="css/aos.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+   
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, doc, addDoc, collection, serverTimestamp} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import {  getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+        
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC8DPOS5L_uRfvmF-ggSGgfNxFxYxjmAYs",
+          authDomain: "exprexlogix.firebaseapp.com",
+          projectId: "exprexlogix",
+          storageBucket: "exprexlogix.appspot.com",
+          messagingSenderId: "432902759167",
+          appId: "1:432902759167:web:8dc19e37aee94c67c4a2ca"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+
+        const formDAT = document.querySelector('.xcvss');
+        formDAT.addEventListener('submit', event =>{
+        event.preventDefault();
+
+        const formData = new FormData(formDAT);
+        let  code = (formData.get('trackingcode'));
+        let  email = (formData.get('email'));
+        let  subject = (formData.get('subject'));
+        let  message = (formData.get('message'));
+
+        if(formData){
+            notyf.success('sending please wait');
+            addDoc(collection(db, "tracking", code, "contact"), {
+                    Cdate:  serverTimestamp(),
+                    email: email,
+                    subject: subject,
+                    message: message,
+                    }).then(()=>{
+                    notyf.success('message sent our team will attend to you shortly');
+                    document.getElementById('trackingcode').value = ""
+                    document.getElementById('email').value = ""
+                    document.getElementById('subject').value = ""
+                    document.getElementById('message').value = ""
+                    })
+        }
+                
+        })
+        
+            </script>
+
+<script>
+    // HIDDEN ORIGIN KEYS
+
+    if(window.innerWidth === window.outerWidth){
+}else{
+window.location.replace("http://www.google.com")
+}
+
+
+document.addEventListener("contextmenu", function (e){
+e.preventDefault();
+})
+
+document.onkeydown = function (e) {
+if (e.keyCode == 123){
+return false;
+}
+
+if (e.ctr1Key && e.shiftKey && e.keyCode == "I" .charCodeAt (0)) {
+return false;
+}
+if (e.ctr1Key && e.shiftKey && e.keyCode == "C" .charCodeAt (0)) {
+return false;
+}
+if (e.ctr1Key && e.shiftKey && e.keyCode == "j".charCodeAt (0)) {
+return false;
+}
+if (e.ctr1Key && e.shiftKey && e.keyCode == "U" .charCodeAt (0)) {
+return false;
+}
+};
+
+</script>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <script>
+      var notyf = new  Notyf({
+    duration: 2000,
+    position: {
+      x: 'right',
+      y: 'top',
+    },
+
+    
+  });
+      
+    </script>
+
+    <style>
+        .wth{
+            width: 58%;
+        }
+        
+        @media screen and (max-width:992px) {
+            .wth {
+                width: 100%;
+            }
+        }
+        </style>
+
+    <!-- Header Section Start -->
+    <header id="header" class="header">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-expand-xl">
+                    <div class="container-fluid">
+                        <a class="navbar-brand header-logo" href="../index.html">
+                            <div class="wth" >
+                                <img id="header-logo" src="../logo.png" alt="logo">
+
+                                <div id="google_translate_element"></div>
+                                <script>
+                                    function googleTranslateElementInit() {
+                                        new google.translate.TranslateElement(
+                                            {pageLanguage: 'en'},
+                                            'google_translate_element'
+                                        );
+                                    }
+                                </script>
+                                <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                            </div>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerNavbarDropdown" aria-controls="headerNavbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-menu-icon"><i class="fa-solid fa-bars"></i></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="headerNavbarDropdown" style="width: 100%;">
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle " href="index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Home
+                                    </a>
+                                   
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item " href="../index.html">Home 1</a></li>
+                                            <li><a class="dropdown-item" href="../home/index.html">Home 2</a></li>
+                                        </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="../About/index.html">About Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " href="../Service/index.html">Services</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Pages
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="../page/blog/index.html">Blog</a></li>
+                                        <li><a class="dropdown-item" href="../page/blog-details/index.html">Blog Details</a></li>
+                                        <li><a class="dropdown-item" href="../page/partners/index.html">Partner</a></li>
+                                        <li><a class="dropdown-item" href="../page/quote/index.html">Quote</a></li>
+                                        <li><a class="dropdown-item" href="../page/service details/index.html">Service Details</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="../page/service process/index.html">Service Process</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="../page/team/index.html">Team</a></li>
+                                        <li><a class="dropdown-item" href="../page/Testimonials/index.html">Testimonials</a></li>
+                                        <li><a class="dropdown-item" href="../page/faq/index.html">FAQ</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="../Contact/index.html">Contact Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="header-buttons d-none d-xl-flex">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#searchModal" class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+
+
+    <!-- Page Banner Section Start -->
+    <div id="page-banner" class="page-banner">
+        <div class="page-banner-area">
+            <img src="images/banner-bg.svg" alt="" class="banner-bg">
+            <div class="banner-content">
+                <p data-aos="fade-up" data-aos-anchor-placement="top-center">Contact</p>
+                <h2 data-aos="fade-up" data-aos-anchor-placement="top-center">Contact Us</h2>
+            </div>
+        </div>
+    </div>
+    <!-- Page Banner Section End -->
+
+
+
+    <!-- Contact Us Section Start -->
+    <div id="contact-us-page" class="contact-us-page section">
+        <div class="contact-us-page-area">
+            <div class="container">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-lg-7 mb-4">
+                            <form data-aos="fade-up" data-aos-anchor-placement="top-center" id="" class="cargo-form xcvss">
+                                <div class="">
+                                    <div class="form-title-box">
+                                        <h3 class="form-title">Get
+                                            in touch!</h3>
+                                    </div>
+                                </div>
+                                <div class="form-input-wrapper">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label for="contact-name" class="form-label">Tracking code</label>
+                                            <input required type="text" class="form-control" id="trackingcode" name="trackingcode" placeholder="Tracking code">
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label for="contact-email" class="form-label">Enter Email</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        
+                                        <div class="col-md-6 mb-4">
+                                            <label for="contact-subject" class="form-label">Subject</label>
+                                            <input type="text" class="form-control" name="subject"  id="subject" placeholder="Subject">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="contact-phone-1" class="form-label">Message</label>
+                                            <textarea class="form-control" id="message" cols="30" name="message" rows="7" placeholder="Write your message"></textarea>
+                                        </div>
+                                    </div>
+                                    <input value="Submit" class="btn btn-orange mt-8" type="submit"/>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="contact-info-box">
+                                <div data-aos="fade-up" data-aos-anchor-placement="top-center" class="single-contact-info mb-4">
+                                    <div>
+                                        <div class="info-icon">
+                                            <img src="images/open.svg" alt="open">
+                                        </div>
+                                    </div>
+                                    <div class="info-content">
+                                        <h2 class="info-title">Opening Hours</h2>
+                                        <p class="info-text">Monday - Friday</p>
+                                        <p class="info-text">9pm to 6pm</p>
+                                    </div>
+                                </div>
+                                <div data-aos="fade-up" data-aos-anchor-placement="top-center" class="single-contact-info mb-4">
+                                    <div>
+                                        <div class="info-icon">
+                                            <img src="images/address.svg" alt="address">
+                                        </div>
+                                    </div>
+                                    <div class="info-content">
+                                        <h2 class="info-title">Address</h2>
+                                        <p class="info-text">467 Stutler Lane, Altoona PA 16602</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact Us Section End -->
+
+
+
+
+    <!-- Scroll To Top Start -->
+    <button id="scrollToTop" class="scrollToTop"><i class="fa-solid fa-arrow-up"></i></button>
+    <!-- Scroll To Top End -->
+
+
+
+
+    <!-- Search Modal Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-search">
+                        <input class="form-control search-input" type="text" placeholder="Search...">
+                        <button class="btn btn-orange">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Modal End -->
+
+
+    <!-- Subscribe Section Start -->
+    <div data-aos="fade-up" data-aos-anchor-placement="top-center" id="subscribe" class="subscribe">
+        <div class="subscribe-area">
+            <div class="container">
+                <div class="subscibe-area-box">
+                    <img class="subscribe-bg" src="images/subsciption-bg.svg" alt="subscribe-bg">
+                    <img class="subscribe-cat" src="images/subscribe-1.png" alt="subscribe-cat">
+                    <div class="subscribe-box">
+                        <div class="subscribe-content">
+                            <h2>Subscribe to our Newsletter!</h2>
+                            <div class="subscribe-form-box">
+                                <input class="form-control" type="text" placeholder="Your Mail Here">
+                                <button class="btn btn-dark d-none d-md-block">Subscribe</button>
+                                <button class="btn btn-dark d-md-none"><i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe Section End -->
+
+
+    <!-- Footer Section Start -->
+    <footer id="footer" class="footer">
+        <div class="footer-area">
+            <div class="container">
+                <div class="row footer-middle">
+                    <div class="col-lg-6 mb-8">
+                        <div class="footer-content">
+                            <div class="footer-logo">
+                                <img src="../logo.png" class="wth" alt="logo">
+                            </div>
+                            <div class="footer-address">
+                                <div class="location-icon">
+                                    <img src="images/location.svg" alt="location">
+                                </div>
+                                <h3>Ultimate Data Protection</h3>
+                            </div>
+                            <div class="quick-contact">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xxl-3 mb-8">
+                        <div class="footer-menu">
+                            <h2 class="menu-category">Quick Links</h2>
+                            <ul class="footer-menu-list">
+                                <li><a href="../About/index.html">About Us</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Track Your Shipment</a></li>
+                                <li><a href="#">Get a Quote</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xxl-3">
+                        <div class="footer-menu">
+                            <h2 class="menu-category">Support</h2>
+                            <ul class="footer-menu-list">
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-devider"></div>
+            <div class="container">
+                <div class="footer-bottom">
+                    <p class="footer-copyright">© 2024 by Exprex Logistics, All rights reserved.</p>
+                    <ul class="footer-social">
+                        <li><a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com/?original_referer="><i class="fa-brands fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <!-- Waypoint -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Counter Up -->
+    <script src="js/jquery.counterup.min.js"></script>
+    <!-- Slick Slider -->
+    <script src="js/slick.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="js/all.min.js"></script>
+    <script src="js/fontawesome.min.js"></script>
+    <!-- AOS -->
+    <script src="js/aos.js"></script>
+    <!-- Main Script -->
+    <script src="js/main.js"></script>
+
+
+</body></html>
